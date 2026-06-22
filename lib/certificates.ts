@@ -1,4 +1,4 @@
-import { sql } from "@/lib/db";
+import { supabase } from "@/lib/supabase";
 
 const CERTIFICATE_ID_PATTERN = /^[A-Za-z0-9_-]{16,80}$/;
 
@@ -41,18 +41,17 @@ export async function getCertificateById(
     return null;
   }
 
-  const [row] = await sql<CertificateRow[]>`
-    select
-      certificate_id,
-      cohort,
-      certificate_name,
-      participant_name,
-      certificate_issued_on
-    from public.certificate_recipients
-    where certificate_id = ${normalizedId}
-      and verification_active = true
-    limit 1
-  `;
+  const { data: row, error } = await supabase
+    .from("certificate_public_verifications")
+    .select(
+      "certificate_id, cohort, certificate_name, participant_name, certificate_issued_on",
+    )
+    .eq("certificate_id", normalizedId)
+    .maybeSingle<CertificateRow>();
+
+  if (error) {
+    throw error;
+  }
 
   if (!row) {
     return null;
@@ -66,4 +65,3 @@ export async function getCertificateById(
     issuedOn: formatIssuedOn(row.certificate_issued_on),
   };
 }
-

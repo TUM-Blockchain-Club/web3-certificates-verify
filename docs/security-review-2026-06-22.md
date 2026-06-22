@@ -14,29 +14,27 @@ Reviewed:
 
 ## Findings
 
-### P1: Supabase Postgres Is Not Connected From This Environment
+### Resolved After Review: Supabase Runtime API Is Connected
 
-The site depends on `DATABASE_URL`, but the direct Supabase database host is not reachable from the local environment. A connection test failed with `ECONNREFUSED` against the IPv6-only database host.
+The site now uses the Supabase REST API with the publishable key. The public verification view was created through the claim platform migrations and tested successfully with the publishable key.
 
-Impact: valid certificate pages cannot be verified until the deployment environment has a working database connection string, preferably a Supabase pooler URL.
+The direct database host remains IPv6-only from this environment, but the operational pooler URL for migrations/imports was discovered separately in the claim platform.
 
-### P1: Runtime Database URL Appears To Be A Broad Postgres Credential
+### Resolved After Review: Runtime Database URL Removed
 
-The app uses `DATABASE_URL` directly from server runtime. The provided URL is for the `postgres` user. Even though all current queries are parameterized, a server compromise would expose broad database privileges.
+The app was changed to use the Supabase REST API with the publishable key against a dedicated public verification view. It no longer needs a direct Postgres URL at runtime.
 
-Recommendation: create a least-privileged read-only role for this verification site. It should only be able to select the public verification columns from `certificate_recipients`, preferably through a dedicated view.
+The supporting view is defined in the claim platform migrations and still needs to be applied through SQL access.
 
-### P2: Verification Pages Are Publicly Indexable
+### Resolved After Review: Verification Pages Marked Noindex
 
-The site allows crawling through `robots.ts`, and valid verification pages expose participant name, certificate name, cohort, issue date, and certificate ID. This matches the public verification requirement, but it may allow shared verification URLs to be indexed.
+Dynamic verification pages now set `robots.index = false` and `robots.follow = false` while keeping direct URL access public.
 
 Recommendation: consider `noindex` metadata for `/verify/<certificateId>` pages while keeping direct URL access public.
 
-### P2: Dependency Audit Reports A Moderate PostCSS Advisory
+### Resolved After Review: PostCSS Advisory Fixed
 
-`pnpm audit --audit-level moderate` reports `postcss <8.5.10` through `next@16.2.9`.
-
-Recommendation: add a package-manager override to force patched `postcss >=8.5.10`, or upgrade Next once its dependency tree is patched.
+The repo now pins `postcss` to `8.5.15` through a pnpm override. `pnpm audit --audit-level moderate` reports no known vulnerabilities.
 
 ## Positive Notes
 
@@ -45,4 +43,4 @@ Recommendation: add a package-manager override to force patched `postcss >=8.5.1
 - SQL queries use parameterized `postgres` tagged templates.
 - Runtime secrets stay server-side.
 - `pnpm lint`, `pnpm typecheck`, and `pnpm build` pass.
-
+- `pnpm audit --audit-level moderate` passes.

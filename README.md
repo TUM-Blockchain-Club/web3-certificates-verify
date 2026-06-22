@@ -37,10 +37,12 @@ pnpm dev
 
 Required environment variables are documented in `.env.example`. Keep `.env` uncommitted.
 
+The app uses the Supabase REST API with a publishable key against the public
+verification view. It should not need a direct Postgres URL at runtime.
+
 ## Checks
 
 ```bash
 pnpm typecheck
 pnpm build
 ```
-

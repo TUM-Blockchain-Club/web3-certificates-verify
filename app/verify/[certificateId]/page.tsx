@@ -26,6 +26,10 @@ export async function generateMetadata({
   return {
     title: `${certificate.participantName} - ${certificate.certificateName}`,
     description: `Valid ${certificate.certificateName} for ${certificate.participantName}.`,
+    robots: {
+      follow: false,
+      index: false,
+    },
   };
 }
 
@@ -78,4 +82,3 @@ export default async function VerifyCertificatePage({ params }: PageProps) {
     </main>
   );
 }
-
