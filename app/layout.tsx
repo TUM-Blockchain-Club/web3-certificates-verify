@@ -17,8 +17,8 @@ const body = IBM_Plex_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Web3 Talents Certificates",
-    template: "%s | Web3 Talents Certificates",
+    default: "Web3 Verification",
+    template: "%s | Web3 Verification",
   },
   description: "Verify Web3 Talents certificates issued by Tum Blockchain Club.",
 };
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#f8f5ee",
+  themeColor: "#03000b",
 };
 
 export default function RootLayout({

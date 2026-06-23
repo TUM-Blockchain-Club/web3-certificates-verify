@@ -17,6 +17,8 @@
 - Keep `/verify/<certificateId>` stable; old certificate URLs must not break.
 - Do not commit `.env` or credentials.
 - Use the shared Supabase schema owned by the claim platform repository.
+- Keep the visual theme aligned with the official TUM Blockchain Club dark violet palette from the website repo: background `#03000b`, accent `#672eb3`, highlight `#c29fff`.
+- The public site name is `Web3 Verification`.
 
 ## Product Naming
 

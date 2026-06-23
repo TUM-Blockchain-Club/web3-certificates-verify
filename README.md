@@ -2,6 +2,8 @@
 
 Permanent public verification site for Web3 Talents certificates.
 
+Site name: `Web3 Verification`
+
 Production domain:
 
 ```text
