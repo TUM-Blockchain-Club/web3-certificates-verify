@@ -39,8 +39,9 @@ pnpm dev
 
 Required environment variables are documented in `.env.example`. Keep `.env` uncommitted.
 
-The app uses the Supabase REST API with a publishable key against the public
-verification view. It should not need a direct Postgres URL at runtime.
+The app uses the Supabase REST API with the server-only secret key against the
+verification view. The publishable key must not be able to list verification
+records. This app should not need a direct Postgres URL at runtime.
 
 ## Checks
 

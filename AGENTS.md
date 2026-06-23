@@ -11,7 +11,8 @@
 ## Conventions
 
 - Use `pnpm` for all Node.js work.
-- Use the Supabase REST API with the publishable key against `certificate_public_verifications`.
+- Use the Supabase REST API with the server-only secret key against `certificate_public_verifications`.
+- Do not expose the verification dataset through a publishable key; verification pages should query one certificate server-side by ID.
 - Do not add a runtime direct Postgres connection to this repo.
 - Do not add claim, email, PDF generation, or NFT collection features to this repo.
 - Keep `/verify/<certificateId>` stable; old certificate URLs must not break.
