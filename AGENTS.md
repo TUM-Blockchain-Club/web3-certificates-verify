@@ -26,5 +26,5 @@ Use these spellings consistently:
 
 - Web3 Talents
 - Web3 Talents Certificate
-- Cohort 1
+- Blockchain Fundamentals 1
 - Tum Blockchain Club
