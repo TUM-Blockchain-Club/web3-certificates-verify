@@ -11,6 +11,20 @@ type PageProps = {
 
 const getCertificate = cache(getCertificateById);
 
+function getNameClassName(name: string) {
+  const normalizedLength = name.replace(/\s+/g, "").length;
+
+  if (normalizedLength > 28) {
+    return "certificate-name certificate-name-extra-long";
+  }
+
+  if (normalizedLength > 18) {
+    return "certificate-name certificate-name-long";
+  }
+
+  return "certificate-name";
+}
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -45,9 +59,11 @@ export default async function VerifyCertificatePage({ params }: PageProps) {
     <main className="page">
       <section className="verification-panel" aria-label="Certificate details">
         <div className="statement">
-          <div>
+          <div className="statement-content">
             <p className="kicker">{certificate.cohort}</p>
-            <h1>{certificate.participantName}</h1>
+            <h1 className={getNameClassName(certificate.participantName)}>
+              {certificate.participantName}
+            </h1>
             <p className="lead">
               This certificate is registered as a valid Web3 Talents credential
               issued by Tum Blockchain Club.
